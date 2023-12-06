@@ -2,16 +2,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-// typedef unsigned int u_int32_t;
-
-// 180
-// [1 2 2 3 3 5]
-// size = 6
-// int array[4] = {0, 1, 2, 56};
-// malloc, calloc, realloc
-// free
-/////////////////////// vector<int> a(10, 0);
-
 #define MAX_SIZE 1024
 
 int *canonical(unsigned int n, int *size)
@@ -49,7 +39,6 @@ int *canonical(unsigned int n, int *size)
     *size = dividers_size;
     return dividers;
 }
-//gcc -DMAIN -o bin/canonical src/math/canonical.c -lm
 
 #ifdef MAIN
 
@@ -61,12 +50,17 @@ int main()
     int size = 0;
     int *dividers = NULL;
 
-    scanf("%d", &n);
+    long long test_val[] = {-10, -56, -1, 0, 2, 10, 25, 698754321, 687, 100, 90009};
+    long long expected[] = {-1, -65, -1, 0, 2, 1, 52, 123457896, 786, 1, 90009};
+    
+    for (int i = 0; i < ARRAY_SIZE(test_val); i++) 
+    {
+        assert(print_reverse_num(test_val[i]) == expected[i]);
+    }
     dividers = canonical(n, &size);
     for (int i = 0; i < size; i++)
     {
         printf("%d ", dividers[i]);
     }
 }
-
 #endif
