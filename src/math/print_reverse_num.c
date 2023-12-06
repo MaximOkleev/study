@@ -1,6 +1,6 @@
 #include <math.h>
 
-long long print_reverse_num(long long n)
+long long return_reverse_num(long long n)
 {
     long long a = 0;
     
@@ -27,9 +27,8 @@ int main()
     
     for (int i = 0; i < ARRAY_SIZE(test_val); i++) 
     {
-        assert(print_reverse_num(test_val[i]) == expected[i]);
+        assert(return_reverse_num(test_val[i]) == expected[i]);
     }
-    puts("");
     return 0;
 }
 
