@@ -1,13 +1,10 @@
-#include <sys/types.h>
 #include <math.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 1024
-
-int *canonical(unsigned int n, int *size)
+unsigned int *canonical(unsigned int n, int *size)
 {
     int dividers_size = 1;
-    int* dividers = (int*)malloc(dividers_size * sizeof(int));
+    unsigned int* dividers = (unsigned int*)malloc(dividers_size * sizeof(unsigned int));
     int root = (int)sqrt(n) + 1;
     int i = 2;
 
@@ -19,7 +16,7 @@ int *canonical(unsigned int n, int *size)
     {
         while (n % i == 0)
         {
-            dividers = (int*)realloc(dividers, dividers_size + 1);
+            dividers = (unsigned int*)realloc(dividers, dividers_size + 1);
             if (!dividers)
                 return NULL;
             dividers[dividers_size] = i;
@@ -30,7 +27,7 @@ int *canonical(unsigned int n, int *size)
     }
     if (n != 1)
     {
-        dividers = (int*)realloc(dividers, dividers_size + 1);
+        dividers = (unsigned int*)realloc(dividers, dividers_size + 1);
         if (!dividers)
             return NULL;
         dividers[dividers_size] = n;
@@ -43,24 +40,46 @@ int *canonical(unsigned int n, int *size)
 #ifdef MAIN
 
 #include <stdio.h>
+#include <assert.h>
+
+struct test_item_s
+{
+    size_t size;
+    unsigned int arr[10];
+};
+
+typedef struct test_item_s test_item_t;
+
+#define ARRAY_SIZE(x) (sizeof(test_val) / sizeof(test_val[0]))
 
 int main()
 {
     int n = 0;
-    int size = 0;
+    unsigned int size = 0;
     int *dividers = NULL;
 
-    long long test_val[] = {-10, -56, -1, 0, 2, 10, 25, 698754321, 687, 100, 90009};
-    long long expected[] = {-1, -65, -1, 0, 2, 1, 52, 123457896, 786, 1, 90009};
+    unsigned int test_val[] = {1, 2, 10, 25, 121};
+    // long long expected[5][2][4] = {{{1}, {1}}, {{2}, {1, 2}}, {{4}, {1, 2, 5, 10}}, {{3}, {1, 5, 25}}, {{3}, {1, 11, 121}}};
+
+    // struct test_item_s expected[] = {};
+    test_item_t expected[] = {
+        { .size = 1, .arr = {1} },
+        { .size = 2, .arr = {1, 2} },
+        { .size = 4, .arr = {1, 2, 5, 10} },
+        { .size = 3, .arr = {1, 5, 25} },
+        { .size = 3, .arr = {1, 11, 121} }
+    };
     
     for (int i = 0; i < ARRAY_SIZE(test_val); i++) 
     {
-        assert(print_reverse_num(test_val[i]) == expected[i]);
-    }
-    dividers = canonical(n, &size);
-    for (int i = 0; i < size; i++)
-    {
-        printf("%d ", dividers[i]);
+        dividers = canonical(test_val[i], &size);
+        assert(size == expected[i].size);
+        for(int j = 0; j < size; j++)
+        {
+            assert(dividers[j] == expected[i].arr[j]);
+            printf("%u", dividers[j]);
+        }
     }
 }
+
 #endif
