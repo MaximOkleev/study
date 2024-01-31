@@ -1,59 +1,67 @@
-#ifdef MAIN
-
 #include <stdio.h>
 #include <assert.h>
+#include <stdlib.h>
 #include <math.h>
 
-struct doubl
+struct arithmetic_operations_with_two_double
 {
     double x;
     double y;
 };
 
-struct point
+typedef struct arithmetic_operations_with_two_double oper_double;
+
+double summation_two_double(oper_double a, oper_double b)
 {
-    int x1;
-    int y1;
-    int x2;
-    int y2;
-};
+    return a.x + b.y;
+}
 
-struct test_item_s
+double subtraction_two_double(oper_double a, oper_double b)
 {
-    size_t size;
-    unsigned int arr[10];
-};
+    return fabsl(a.x - b.y);
+}
 
-typedef struct doubl d;
+double product_of_two_double(oper_double a, oper_double b)
+{
+    return a.x * b.y;
+}
 
-typedef struct point p;
+#define ARRAY_SIZE(x) (sizeof(test_val) / sizeof(test_val[0]))
 
-typedef struct test_item_s test_item_t;
-
-//#define ARRAY_SIZE(x) (sizeof(test_val) / sizeof(test_val[0]))
+#ifdef MAIN
 
 int main()
 {
     int n = 0;
     unsigned int size = 0;
     int *dividers = NULL;
+    double eps = 0.000001;
 
-    double test_val[][] = {{1.2, 1.3}, {1.3, 1.4}, {1.4, 1.5}, {1.5, 1.6}, {1.6, 1.7}};
+    oper_double test_val[][2] = {
+        { 1.2, 1.3 }, 
+        { 1.3, 1.4 },
+        { 1.4, 1.5 },
+        { 1.5, 1.6 }, 
+        { 1.6, 1.7 }
+    };
 
-    d expected[] = {
-        { .x = 1.2, .y = 1.3 },
-        { .x = 1.3, .y = 1.4 },
-        { .x = 1.4, .y = 1.5 },
-        { .x = 1.5, .y = 1.6 },
-        { .x = 1.6, .y = 1.7 }
+    double expected[][3] = {
+        { 2.5, 0.1, 1.56 },
+        { 2.7, 0.1, 1.82 },
+        { 2.9, 0.1, 2.1 },
+        { 3.1, 0.1, 2.4 },
+        { 3.3, 0.1, 2.72 }
     };
 
     for (int i = 0; i < 5; i++)
     {
-        assert((expected[i].x + expected[i].y) == test_val[i][0] + test_val[i][1]);
-        assert((expected[i].x - expected[i].y) == test_val[i][0] - test_val[i][1]);
-        assert((expected[i].x * expected[i].y) == test_val[i][0] * test_val[i][1]);
-        printf("%f %f %f", expected[i].x + expected[i].y, expected[i].x - expected[i].y, expected[i].x * expected[i].y);
+        double sum = summation_two_double(test_val[i][0], test_val[i][1]);
+        double sub = subtraction_two_double(test_val[i][0], test_val[i][1]);
+        double prod = product_of_two_double(test_val[i][0], test_val[i][1]);
+        printf("%lf %lf %f \n", sum, sub, prod);
+        assert(fabsl(sum - expected[i][0]) <= eps);
+        assert(fabsl(sub - expected[i][1]) <= eps);
+        assert(fabsl(prod - expected[i][2]) <= eps);
     }
 }
 
