@@ -2,9 +2,13 @@
 
 unsigned int count_del(unsigned int n)
 {
-    if (n < 4)
+    if (n <= 2)
     {
         return n;
+    }
+    else if (n == 3)
+    {
+        return 2;
     }
     unsigned int count = 1;
     int dividers_size = 0;
