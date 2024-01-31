@@ -56,7 +56,7 @@ int main()
 {
     int n = 0;
     unsigned int size = 0;
-    int *dividers = NULL;
+    unsigned int *dividers = NULL;
 
     unsigned int test_val[] = {1, 2, 10, 25, 121};
     // long long expected[5][2][4] = {{{1}, {1}}, {{2}, {1, 2}}, {{4}, {1, 2, 5, 10}}, {{3}, {1, 5, 25}}, {{3}, {1, 11, 121}}};
@@ -65,11 +65,15 @@ int main()
     test_item_t expected[] = {
         { .size = 1, .arr = {1} },
         { .size = 2, .arr = {1, 2} },
-        { .size = 4, .arr = {1, 2, 5, 10} },
-        { .size = 3, .arr = {1, 5, 25} },
-        { .size = 3, .arr = {1, 11, 121} }
+        { .size = 3, .arr = {1, 2, 5} },
+        { .size = 3, .arr = {1, 5, 5} },
+        { .size = 3, .arr = {1, 11, 11} }
     };
-    
+    /*dividers = canonical(test_val[0], &size);
+    for(int i = 0; i < size; i++)
+    {
+        printf("%u ", dividers[i]);
+    }*/
     for (int i = 0; i < ARRAY_SIZE(test_val); i++) 
     {
         dividers = canonical(test_val[i], &size);
@@ -77,9 +81,9 @@ int main()
         for(int j = 0; j < size; j++)
         {
             assert(dividers[j] == expected[i].arr[j]);
-            printf("%u", dividers[j]);
+            printf("%u ", dividers[j]);
         }
+        printf("\n");
     }
 }
-
 #endif
