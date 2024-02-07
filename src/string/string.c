@@ -65,7 +65,7 @@ char* my_strstr(const char* p1,const char* p2)
 
 char* my_strcat(char* d, const char* s)
 {
-    char* ptr = d + strlen(d);
+    char* ptr = d + my_strlen(d);
     while (*s != '\0') {
         *ptr++ = *s++;
     }
