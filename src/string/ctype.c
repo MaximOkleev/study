@@ -26,7 +26,7 @@ int my_islower(int s)
 
 int my_ispunct(int s)
 {
-    return ((s == ',') || (s == '.') || (s == ':') || (s == ';') || (s == '"') || (s == '?'));
+    return ((s == ',') || (s == '.') || (s == ':') || (s == ';') || (s == '\"') || (s == '?') || (s == '\''));
 }
 
 int my_isupper(int s)
