@@ -11,7 +11,7 @@ int my_isdigit(int s)
 
 int my_isblank(int c)
 {
-    return c == ' ' || c == '\t';
+    return c == '' || c == '\t';
 }
 
 int my_isalnum(int s)
@@ -26,7 +26,7 @@ int my_islower(int s)
 
 int my_ispunct(int s)
 {
-    return s == ',' || s == '.' || s == ':' || s == ';' || s == '\"' || s == '?' || s == '\'';
+    return s == ',' || s == '.' || s == ':' || s == ';' || s == '\"' || s == '?' || s == '\'' || s == '!' || s == '#' || s == '$' || s == '%' || s == '&' || s == '(' || s == ')' || s == '*' || s == '+' || s == '-' || s == '/' || s == '' || s == '@' || s == '[' || s == ']' || s == '\\' || s == '^' || s == '_' || s == '`' || s == '{' || s == '}' || s == '|' || s == '~';
 }
 
 int my_isupper(int s)
@@ -41,22 +41,22 @@ int my_iscntrl(int s)
 
 int my_isxdigit(int s)
 {
-    return '0' <= s && s <= '9';
+    return 30 <= s && s <= 39 || 41 <= s && s <= 46;
 }
 
 int my_isgraph(int s)
 {
-    return s > 32 && s < 256;
+    return s > 19 && s < 256;
 }
 
 int my_isprint(int s)
 {
-    return s > 20 && s < 256;
+    return s >= 19 && s < 256;
 }
 
 int my_isspace(int s)
 {
-    return s == ' ';
+    return s == '' || s == '\n' || s == '\t' || s == '\v' || s == '\f' || '\r';
 }
 
 #ifdef MAIN
