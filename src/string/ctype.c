@@ -11,7 +11,7 @@ int my_isdigit(int s)
 
 int my_isblank(int c)
 {
-    return c == '' || c == '\t';
+    return c == ' ' || c == '\t';
 }
 
 int my_isalnum(int s)
@@ -26,7 +26,7 @@ int my_islower(int s)
 
 int my_ispunct(int s)
 {
-    return s == ',' || s == '.' || s == ':' || s == ';' || s == '\"' || s == '?' || s == '\'' || s == '!' || s == '#' || s == '$' || s == '%' || s == '&' || s == '(' || s == ')' || s == '*' || s == '+' || s == '-' || s == '/' || s == '' || s == '@' || s == '[' || s == ']' || s == '\\' || s == '^' || s == '_' || s == '`' || s == '{' || s == '}' || s == '|' || s == '~';
+    return s == ',' || s == '.' || s == ':' || s == ';' || s == '\"' || s == '?' || s == '\'' || s == '!' || s == '#' || s == '$' || s == '%' || s == '<' || s == '>' || s == '=' ||  s == '&' || s == '(' || s == ')' || s == '*' || s == '+' || s == '-' || s == '/' || s == '@' || s == '[' || s == ']' || s == '\\' || s == '^' || s == '_' || s == '`' || s == '{' || s == '}' || s == '|' || s == '~';
 }
 
 int my_isupper(int s)
@@ -41,22 +41,22 @@ int my_iscntrl(int s)
 
 int my_isxdigit(int s)
 {
-    return 30 <= s && s <= 39 || 41 <= s && s <= 46;
+    return 48 <= s && s <= 57 || 65 <= s && s <= 70 || 97 <= s && s <= 102;
 }
 
 int my_isgraph(int s)
 {
-    return s > 19 && s < 256;
+    return s >= 33 && s < 127;
 }
 
 int my_isprint(int s)
 {
-    return s >= 19 && s < 256;
+    return s >= 32 && s < 127;
 }
 
 int my_isspace(int s)
 {
-    return s == '' || s == '\n' || s == '\t' || s == '\v' || s == '\f' || '\r';
+    return s == ' ' || s == '\n' || s == '\t' || s == '\v' || s == '\f' || '\r';
 }
 
 #ifdef MAIN
@@ -67,11 +67,14 @@ int my_isspace(int s)
 
 int main()
 {
+    int (*lib_foo)(int) = isprint;
+    int (*my_foo)(int) = my_isprint;
+
     for (int i = 0; i < 256; i++)
     {
-        if ((my_isgraph(i) == 0) ^ (isgraph(i) == 0))
+        if ((my_foo(i) == 0) ^ (lib_foo(i) == 0))
         {
-            printf("%x, %d - %d\n", i, my_isgraph(i) == 0, isgraph(i) == 0);
+            printf("%d, %d - %d\n", i, my_foo(i) == 0, lib_foo(i) == 0);
             // puts("FAILED");
         }
     }
