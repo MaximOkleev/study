@@ -56,8 +56,9 @@ int my_isprint(int s)
 
 int my_isspace(int s)
 {
-    return s == ' ' || s == '\n' || s == '\t' || s == '\v' || s == '\f' || '\r';
+    return s == ' ' || s == '\n' || s == '\t' || s == '\v' || s == '\f' || s == '\r';
 }
+
 
 #ifdef MAIN
 
@@ -67,8 +68,8 @@ int my_isspace(int s)
 
 int main()
 {
-    int (*lib_foo)(int) = isprint;
-    int (*my_foo)(int) = my_isprint;
+    int (*lib_foo)(int) = isspace;
+    int (*my_foo)(int) = my_isspace;
 
     for (int i = 0; i < 256; i++)
     {
