@@ -1,13 +1,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-// * []
-// +- k
-// ptr2 - ptr1
-
 size_t my_strlen(const char *s)
 {
-    size_t i = 0; // *s
+    size_t i = 0;
 
     while (s[i] != '\0')
     {
@@ -18,16 +14,14 @@ size_t my_strlen(const char *s)
 
 char* my_strdup(const char *str)
 {
-    char* str1 = (char*)str;
     size_t len = my_strlen(str);
-
     char* newstr = (char*)malloc(len + 1);
 
-    while (*str1 != '\0')
+    while (*str != '\0')
     {
-        *newstr = *str1;
+        *newstr = *str;
         newstr++;
-        str1++;
+        str++;
     }
     return newstr - (len + 1);
 }
@@ -66,7 +60,7 @@ char* my_strstr(const char* str1,const char* str2)
 		}
 		cur++;
 	}
-    return 0;
+    return NULL;
 }
 
 char* my_strcat(char* d, const char* s)
@@ -80,17 +74,8 @@ char* my_strcat(char* d, const char* s)
         d++;
     }
     *d = '\0';
-    return d - my_strlen(d);
-}
-    /*size_t size_s = my_strlen(s);
-    size_t size_d = my_strlen(d);
-    
-    for (int i = 0; i < size_s; i++)
-    {
-        d[size_d + i] = s[i];
-    }
-    d[size_d + size_s - 1] = '\0';*/
-    
+    return d - my_strlen(d) + 1;
+}  
 
 char* del_elem(char array[], size_t index, size_t arr_size)
 {
@@ -134,19 +119,4 @@ int palindrom(const char *s)
         }
     }
     return otv;
-}
-
-
-#include <stdio.h>
-
-int main()
-{
-    char s[] = "abcdefg";
-    char d[] = "kl";
-    char *c = my_strcat(s, d);
-
-    // char c[] = "abcd\0"; // "hello world" \0
-
-    printf("%s\n", s);
-    return 0;
 }
