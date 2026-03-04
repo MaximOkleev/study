@@ -1,13 +1,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-// * []
-// +- k
-// ptr2 - ptr1
-
 size_t my_strlen(const char *s)
 {
-    size_t i = 0; // *s
+    size_t i = 0;
 
     while (s[i] != '\0')
     {
@@ -16,10 +12,23 @@ size_t my_strlen(const char *s)
     return i;
 }
 
-int my_strcmp(const char*str1, const char*str2)
+char* my_strdup(const char *str)
 {
-	assert(str1 && str2);
-	while (*str1 == *str2)
+    size_t len = my_strlen(str);
+    char* newstr = (char*)malloc(len + 1);
+
+    while (*str != '\0')
+    {
+        *newstr = *str;
+        newstr++;
+        str++;
+    }
+    return newstr - (len + 1);
+}
+
+int my_strcmp(const char* str1, const char* str2)
+{
+    while (*str1 == *str2)
 	{
 		if (*str1 == '\0')
 		{
@@ -34,44 +43,39 @@ int my_strcmp(const char*str1, const char*str2)
 		return -1;
 }
 
-char* my_strstr(const char* p1,const char* p2)
+char* my_strstr(const char* str1,const char* str2)
 {
-	assert(p1 != NULL);
-	assert(p2 != NULL);
-	char* s1 = p1;
-	char* s2 = p2;
-	char* cur =(char*) p1;
-	if (*p2 == '\0')
+	char* cur = (char*)str1;
+	while (*cur != '\0')
 	{
-		return p1;
-	}
-	while (*cur)
-	{
-		s1 = cur;
-		s2 = p2;
-		while((*s1!='\0') && (*s2!='\0') && (*s1 == *s2))
+		str1 = cur;
+		while((*str1 != '\0') && (*str2 != '\0') && (*str1 == *str2))
 		{
-			s1++;
-			s2++;
+			str1++;
+			str2++;
 		}
-		if (*s2 == '\0')
+		if (*str2 == '\0')
 		{
 			return cur;
 		}
 		cur++;
 	}
-	return NULL;
+    return NULL;
 }
 
 char* my_strcat(char* d, const char* s)
 {
-    char* ptr = d + strlen(d);
-    while (*s != '\0') {
-        *ptr++ = *s++;
+    while (*d != '\0')
+        d++;
+    while (*s != '\0')
+    {
+        *d = *s;
+        s++;
+        d++;
     }
-    *ptr = '\0';
-    return d;
-}
+    *d = '\0';
+    return d - my_strlen(d) + 1;
+}  
 
 char* del_elem(char array[], size_t index, size_t arr_size)
 {
@@ -99,17 +103,7 @@ char* copy_array(const char* array, size_t arr_size)
     return array_copy;
 }
 
-char* my_strdup(const char *str)
-{
-    size_t str_size = my_strlen(str) + 1;
-    char *str_copy = (char*)malloc(str_size * sizeof(char));
-    
-    if (!str_copy)
-        return NULL;
-    for (size_t i = 0; i < str_size; i++)
-        str_copy[i] = str[i];
-    return str_copy;
-}
+
 
 int palindrom(const char *s)
 {
@@ -125,28 +119,4 @@ int palindrom(const char *s)
         }
     }
     return otv;
-}
-
-// char* my_strdup(const char *s)
-// my_strcat()
-// my_strcpy()
-// my_strstr()
-// my_strcmp()
-
-
-#include <stdio.h>
-
-int main()
-{
-    char s[] = "abcdefg";
-    char *c = del_elem(s, 2, 8);
-
-    // char c[] = "abcd\0"; // "hello world" \0
-
-    s[2] = 'k';
-    printf("%s\n", c);
-    printf("%s\n", s);
-    
-
-    return 0;
 }
